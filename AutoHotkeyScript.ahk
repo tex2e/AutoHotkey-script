@@ -149,7 +149,8 @@ backward_char()
 }
 
 
-F13 & f::
+F13 & f::                     ; emacs-like
+F13 & l::                     ; vim-like
   If is_target()
     Send %A_ThisHotkey%
   Else
