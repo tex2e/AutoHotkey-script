@@ -43,6 +43,7 @@ F13 & w::Send ^{Left}+^{Right}  ; CapsLock+w で単語選択
 #c::Run, cmd.exe, %A_MyDocuments%          ; cmd.exe
 !#c::Run, powershell.exe, %A_MyDocuments%  ; PowerShell
 #q::DllCall("PowrProf\SetSuspendState", "int", 0, "int", 1, "int", 0) ; スリープ
+#z::Run http://google.com
 
 
 ;;
