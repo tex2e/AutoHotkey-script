@@ -13,41 +13,48 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 ;;
 ;; CapsLockで入力切替とCtrlキーの役割
 ;;
-F13 Up::Send, {vkF3sc029}  ; 全角半角キー
-F13 & q::Send ^q
-F13 & r::Send ^r
-F13 & t::Send ^t
-F13 & y::Send ^y
-F13 & i::Send ^i
-F13 & s::Send ^s
-F13 & g::Send ^g
-F13 & l::Send ^l
-F13 & z::Send ^z
-F13 & x::Send ^x
-F13 & c::Send ^c
-F13 & v::Send ^v
-F13 & LButton::Send ^{LButton}
-F13 & Left::Send ^{Left}
-F13 & Right::Send ^{Right}
+F13 Up:: Send {vkF3sc029}  ; 全角半角キー
+F13 & r:: ^r
+F13 & t:: ^t
+F13 & y:: ^y
+F13 & i:: ^i
+F13 & s:: ^s
+F13 & g:: ^g
+F13 & l:: ^l
+F13 & z:: ^z
+F13 & x:: ^x
+F13 & c:: ^c
+F13 & v:: ^v
+F13 & LButton:: Send ^{LButton}
+F13 & Left:: Send ^{Left}
+F13 & Right:: Send ^{Right}
 
 
 ;;
-;; カスタムキーバインド
+;; 日付のリマップ
 ;;
-F13 & Tab::AltTab               ; CapsLock+Tab でウィンドウ切り替え
-F13 & w::Send ^{Left}+^{Right}  ; CapsLock+w で単語選択
+::ddd::
+  FormatTime,TimeString,,yyyy/MM/dd
+  Send,%TimeString%
+  Return
+::dd::
+  FormatTime,TimeString,,M/d
+  Send,%TimeString%
+  Return
+
+
 ;;
 ;; プログラム起動のショートカット
 ;;
-#n::Run, Notepad.exe                       ; Notepad
-#c::Run, cmd.exe, %A_MyDocuments%          ; cmd.exe
-!#c::Run, powershell.exe, %A_MyDocuments%  ; PowerShell
-#q::DllCall("PowrProf\SetSuspendState", "int", 0, "int", 1, "int", 0) ; スリープ
-#z::Run http://google.com
+#n:: Run, Notepad.exe                       ; Notepad
+#c:: Run, cmd.exe, %A_MyDocuments%          ; cmd.exe
+!#c:: Run, powershell.exe, %A_MyDocuments%  ; PowerShell
+#q:: DllCall("PowrProf\SetSuspendState", "int", 0, "int", 1, "int", 0) ; スリープ
+#z:: Run http://google.com                  ; Google
 
 
 ;;
-;; MacOSのキーボード風の入力切替
+;; MacOS風のキーボード操作
 ;;
 ; 無変換を押したときは、半角(IME off)
 vk1C::
@@ -72,40 +79,23 @@ IMEGetstate:
   vimestate := DllCall("user32.dll\SendMessageA", "UInt", DllCall("imm32.dll\ImmGetDefaultIMEWnd", "Uint", vcurrentwindow), "UInt", 0x0283, "Int", 0x0005, "Int", 0)
   return
 
+F13 & k:: F7     ; Ctrl-kでカタカナに変換
+F13 & j:: F6     ; Ctrl-jでひらがなに変換
+F13 & Space:: #s ; Ctrl-SpaceでWindowsの検索ボックスを開く
+^q:: WinClose,A  ; Command-qでアクティブウィンドウを閉じる
+
 
 ;;
 ;; Emacs風のキー入力
 ;;
-F13 & f::Send,{Right}      ; forward_char
-F13 & p::Send,{Up}         ; previous_line (emacs)
-F13 & k::Send,{Up}         ; previous_line (vim)
-F13 & n::Send,{Down}       ; next_line (emacs)
-F13 & j::Send,{Down}       ; next_line (vim)
-F13 & b::Send,{Left}       ; backward_char
-F13 & a::Send,{HOME}       ; move_beginning_of_line
-F13 & e::Send,{END}        ; move_end_of_line
-F13 & d::Send,{Del}        ; delete_char
-F13 & h::Send,{BS}         ; delete_backward_char
-F13 & o::Send,{END}{Enter} ; open_line
-F13 & m::Send,{Enter}      ; newline
-F13 & u::^z                ; undo
-
-
-;;
-;; ウィンドウの切り替え
-;;   CapsLock & Shift & 1 で、現在アクティブのウィンドウを記憶
-;;   CapsLock & 1 で記憶したウィンドウをアクティブ化
-;;
-captureOrActive(ByRef id) {
-  if GetKeyState("shift", "P") {
-    WinGet, id, ID, A
-  } else {
-    WinActivate, ahk_id %id%
-  }
-  return
-}
-F13 & 1::captureOrActive(id1)
-F13 & 2::captureOrActive(id2)
-F13 & 3::captureOrActive(id3)
-F13 & 4::captureOrActive(id4)
-F13 & 5::captureOrActive(id5)
+F13 & f:: Right             ; forward_char
+F13 & p:: Up                ; previous_line
+F13 & n:: Down              ; next_line
+F13 & b:: Left              ; backward_char
+F13 & a:: HOME              ; move_beginning_of_line
+F13 & e:: END               ; move_end_of_line
+F13 & d:: Del               ; delete_char
+F13 & h:: BS                ; delete_backward_char
+F13 & o:: Send {END}{Enter} ; open_line
+F13 & m:: Enter             ; newline
+F13 & u:: ^z                ; undo
