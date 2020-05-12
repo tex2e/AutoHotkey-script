@@ -29,10 +29,12 @@ F13 & LButton:: Send ^{LButton}
 F13 & Left:: Send ^{Left}
 F13 & Right:: Send ^{Right}
 
+;;
+;; カスタムマップ
+;;
+^#s::!PrintScreen  ; 左手だけでスクリーンショット
 
-;;
-;; 日付のリマップ
-;;
+; 日付のリマップ
 ::ddd::
   FormatTime,TimeString,,yyyy/MM/dd
   Send,%TimeString%
@@ -42,15 +44,11 @@ F13 & Right:: Send ^{Right}
   Send,%TimeString%
   Return
 
-
-;;
-;; プログラム起動のショートカット
-;;
+; プログラム起動のショートカット
 #n:: Run, Notepad.exe                       ; Notepad
 #c:: Run, cmd.exe, %A_MyDocuments%          ; cmd.exe
 !#c:: Run, powershell.exe, %A_MyDocuments%  ; PowerShell
 #q:: DllCall("PowrProf\SetSuspendState", "int", 0, "int", 1, "int", 0) ; スリープ
-#z:: Run http://google.com                  ; Google
 
 
 ;;
