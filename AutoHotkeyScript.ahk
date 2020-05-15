@@ -32,7 +32,7 @@ F13 & Right:: Send ^{Right}
 ;;
 ;; カスタムマップ
 ;;
-^#s::!PrintScreen  ; 左手だけでスクリーンショット
+!s::!PrintScreen  ; 左手だけでスクリーンショット
 
 ; 日付のリマップ
 ::ddd::
