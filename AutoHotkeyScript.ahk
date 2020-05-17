@@ -81,6 +81,7 @@ F13 & k:: F7     ; Ctrl-kでカタカナに変換
 F13 & j:: F6     ; Ctrl-jでひらがなに変換
 F13 & Space:: #s ; Ctrl-SpaceでWindowsの検索ボックスを開く
 ^q:: WinClose,A  ; Command-qでアクティブウィンドウを閉じる
+vkE2::_          ; アンダースコアをShiftなしで入力する
 
 
 ;;
